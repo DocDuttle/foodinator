@@ -12,9 +12,47 @@
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-gray-100 to-white min-h-screen flex items-center justify-center p-4">
-  <div class="w-full max-w-xl bg-white shadow-xl rounded-xl p-6">
+<body class="bg-gradient-to-br from-gray-100 to-white min-h-screen flex items-center justify-center p-4 overflow-x-hidden">
+  <!-- Login Form -->
+  <div id="login-screen" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-90 z-50 hidden">
+    <div class="bg-white p-6 rounded-xl shadow-xl w-full max-w-xs flex flex-col items-center">
+      <h2 class="text-xl font-semibold mb-4 text-blue-700">Login</h2>
+      <input id="login-username" type="text" placeholder="Benutzername" class="w-full mb-4 p-2 border rounded" />
+      <button id="login-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Login</button>
+    </div>
+  </div>
+  <!-- Customization Screen -->
+  <div id="customize-screen" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-95 z-50 hidden overflow-y-auto">
+    <div class="bg-white p-6 rounded-xl shadow-xl w-full max-w-lg">
+      <h2 class="text-xl font-semibold mb-4 text-blue-700">Menü anpassen</h2>
+      <form id="customize-form">
+        <div class="mb-4">
+          <h3 class="font-bold mb-2">Hauptgang</h3>
+          <div id="customize-hauptgang" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+        </div>
+        <div class="mb-4">
+          <h3 class="font-bold mb-2">Beilage</h3>
+          <div id="customize-beilage" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+        </div>
+        <div class="mb-4">
+          <h3 class="font-bold mb-2">Gemüse</h3>
+          <div id="customize-gemuese" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+        </div>
+        <div class="mb-4">
+          <h3 class="font-bold mb-2">Dessert</h3>
+          <div id="customize-dessert" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+        </div>
+        <div class="flex gap-2 mt-6">
+          <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Speichern</button>
+          <button type="button" id="customize-cancel" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded">Zurück</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="w-full max-w-xl bg-white shadow-xl rounded-xl p-4 sm:p-6 overflow-x-hidden">
+    <button id="logout-btn" class="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm hidden">Logout</button>
     <h1 class="text-3xl font-semibold text-center text-blue-700 mb-6">Was gibt's zum Essen?</h1>
+    <button id="customize-btn" class="w-full mb-4 bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded font-semibold hidden">Menü anpassen</button>
 
     <!-- Status Tracker -->
     <div id="status-tracker" class="flex justify-between items-center mb-6">
@@ -41,25 +79,25 @@
 
     <div id="step-hauptgang" class="step">
       <h2 class="text-xl font-medium text-gray-700">1. Hauptgang wählen</h2>
-      <div id="hauptgang-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4"></div>
+      <div id="hauptgang-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 gap-y-6 mt-4"></div>
     </div>
 
     <div id="step-beilage" class="step hidden">
       <h2 class="text-xl font-medium text-gray-700">2. Beilage wählen</h2>
       <button id="back-beilage" class="mb-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded" onclick="goBack('hauptgang')">← Zurück</button>
-      <div id="beilage-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4"></div>
+      <div id="beilage-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 gap-y-6 mt-4"></div>
     </div>
 
     <div id="step-gemuese" class="step hidden">
       <h2 class="text-xl font-medium text-gray-700">3. Gemüse wählen</h2>
       <button id="back-gemuese" class="mb-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded" onclick="goBack('beilage')">← Zurück</button>
-      <div id="gemuese-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4"></div>
+      <div id="gemuese-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 gap-y-6 mt-4"></div>
     </div>
 
     <div id="step-dessert" class="step hidden">
       <h2 class="text-xl font-medium text-gray-700">4. Dessert wählen</h2>
       <button id="back-dessert" class="mb-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded" onclick="goBack('gemuese')">← Zurück</button>
-      <div id="dessert-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4"></div>
+      <div id="dessert-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 gap-y-6 mt-4"></div>
     </div>
 
     <div id="step-summary" class="step hidden">
@@ -145,8 +183,8 @@
       }
       sortedItems.forEach(item => {
         const card = document.createElement('div');
-        card.className = 'bg-white p-4 rounded-lg shadow hover:scale-105 hover:bg-blue-100 cursor-pointer text-center text-gray-800 font-medium transition transform duration-200 border-4 mb-2';
-        card.innerHTML = `<span style=\"font-size:2rem;\">${item.emoji}</span><br>${item.name}`;
+        card.className = 'aspect-square flex flex-col items-center justify-center bg-white p-4 rounded-xl shadow-lg border hover:scale-105 hover:bg-blue-100 cursor-pointer text-center text-gray-800 font-semibold transition transform duration-200 overflow-hidden w-full';
+        card.innerHTML = `<span class='text-4xl mb-2 truncate w-full block text-center'>${item.emoji}</span><span class='text-base font-semibold text-gray-800 break-words text-center w-full truncate'>${item.name}</span>`;
         card.onclick = () => {
           auswahl[key] = item;
           showStep(nextStep);
@@ -235,5 +273,130 @@
     };
 
   </script>
+</body>
+<script>
+// --- Auth & Customization State ---
+const LS_USER_KEY = 'essenapp_user';
+const LS_ACTIVE_KEY = user => `essenapp_active_${user}`;
+
+function getUser() {
+  return localStorage.getItem(LS_USER_KEY);
+}
+function setUser(u) {
+  localStorage.setItem(LS_USER_KEY, u);
+}
+function removeUser() {
+  localStorage.removeItem(LS_USER_KEY);
+}
+function getActiveMap() {
+  const user = getUser();
+  if (!user) return {};
+  try {
+    return JSON.parse(localStorage.getItem(LS_ACTIVE_KEY(user))) || {};
+  } catch { return {}; }
+}
+function setActiveMap(map) {
+  const user = getUser();
+  if (!user) return;
+  localStorage.setItem(LS_ACTIVE_KEY(user), JSON.stringify(map));
+}
+function isActive(type, idx) {
+  const map = getActiveMap();
+  if (!map[type]) return true;
+  if (typeof map[type][idx] === 'boolean') return map[type][idx];
+  return true;
+}
+
+// --- DOM helpers ---
+function showLogin(show) {
+  document.getElementById('login-screen').classList.toggle('hidden', !show);
+}
+function showCustomize(show) {
+  document.getElementById('customize-screen').classList.toggle('hidden', !show);
+}
+function showApp(show) {
+  document.querySelector('.max-w-xl').classList.toggle('hidden', !show);
+}
+function showCustomizeBtn(show) {
+  document.getElementById('customize-btn').classList.toggle('hidden', !show);
+}
+function showLogoutBtn(show) {
+  document.getElementById('logout-btn').classList.toggle('hidden', !show);
+}
+
+// --- Login/logout logic ---
+function checkLogin() {
+  const user = getUser();
+  if (!user) {
+    showLogin(true); showApp(false); showCustomizeBtn(false); showLogoutBtn(false);
+  } else {
+    showLogin(false); showApp(true); showCustomizeBtn(true); showLogoutBtn(true);
+  }
+}
+document.getElementById('login-btn').onclick = function() {
+  const u = document.getElementById('login-username').value.trim();
+  if (u) { setUser(u); checkLogin(); location.reload(); }
+};
+document.getElementById('logout-btn').onclick = function() {
+  removeUser(); location.reload();
+};
+
+// --- Customize logic ---
+document.getElementById('customize-btn').onclick = function() {
+  populateCustomizeForm();
+  showCustomize(true);
+};
+document.getElementById('customize-cancel').onclick = function() {
+  showCustomize(false);
+};
+document.getElementById('customize-form').onsubmit = function(e) {
+  e.preventDefault();
+  const map = { hauptgang: [], beilage: [], gemuese: [], dessert: [] };
+  ['hauptgang','beilage','gemuese','dessert'].forEach(type => {
+    const boxes = document.querySelectorAll(`#customize-${type} input[type=checkbox]`);
+    boxes.forEach((cb,i) => { map[type][i] = cb.checked; });
+  });
+  setActiveMap(map);
+  showCustomize(false);
+  location.reload();
+};
+function populateCustomizeForm() {
+  const map = getActiveMap();
+  [
+    ['hauptgang', lebensmittel.hauptgang],
+    ['beilage', lebensmittel.beilage],
+    ['gemuese', lebensmittel.gemuese],
+    ['dessert', lebensmittel.dessert]
+  ].forEach(([type, arr]) => {
+    const cont = document.getElementById('customize-' + type);
+    cont.innerHTML = '';
+    arr.forEach((item, idx) => {
+      const id = `cb-${type}-${idx}`;
+      const checked = (map[type] === undefined || map[type][idx] === undefined) ? true : !!map[type][idx];
+      cont.innerHTML += `<label class='flex items-center gap-2 bg-gray-50 rounded px-2 py-1'><input type='checkbox' id='${id}' ${checked ? 'checked' : ''}/> <span class='text-xl'>${item.emoji}</span> <span>${item.name}</span></label>`;
+    });
+  });
+}
+
+// --- Patch menu filtering (cards) ---
+const origCreateCards = createCards;
+createCards = function(items, gridId, nextStep, key, filterFn) {
+  // Only show active items
+  let arrType = null;
+  if (gridId.includes('hauptgang')) arrType = 'hauptgang';
+  else if (gridId.includes('beilage')) arrType = 'beilage';
+  else if (gridId.includes('gemuese')) arrType = 'gemuese';
+  else if (gridId.includes('dessert')) arrType = 'dessert';
+  let filtered = items;
+  if (arrType) {
+    filtered = items.filter((item, idx) => isActive(arrType, idx));
+  }
+  if (filterFn) filtered = filtered.filter(filterFn);
+  return origCreateCards(filtered, gridId, nextStep, key, null);
+};
+
+// --- Hide screens on load, check login ---
+window.addEventListener('DOMContentLoaded', checkLogin);
+</script>
 </body>
 </html>
