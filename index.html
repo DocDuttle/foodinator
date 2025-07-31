@@ -1,70 +1,164 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Was gibt's zum Essen?</title>
   <style>
     body {
       font-family: sans-serif;
+      background: #f9fafb;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
       max-width: 600px;
-      margin: 2rem auto;
-      padding: 1rem;
-      background: #fefefe;
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-    label {
-      display: block;
-      margin-top: 1.5rem;
-      font-weight: bold;
-    }
-    select {
       width: 100%;
-      padding: 0.5rem;
-      font-size: 1rem;
-      margin-top: 0.25rem;
     }
-    #menue {
-      margin-top: 2rem;
+    .step {
+      display: none;
+    }
+    .step.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
       padding: 1rem;
-      background: #f3f3f3;
-      border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      text-align: center;
+      cursor: pointer;
+      font-size: 1.2rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: transform 0.1s;
     }
-    ul {
-      list-style: none;
-      padding-left: 0;
+    .card:hover {
+      transform: scale(1.05);
+      background: #f0f0ff;
     }
-    li {
-      margin: 0.5rem 0;
+    .summary {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-top: 2rem;
+    }
+    button {
+      margin-top: 2rem;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <h1>Was gibt's zum Essen?</h1>
+  <div class="container">
+    <h1>Was gibt's zum Essen?</h1>
 
-  <label for="hauptgang">Hauptgang:
-    <select id="hauptgang"></select>
-  </label>
+    <div id="step-hauptgang" class="step active">
+      <h2>Wähle den Hauptgang</h2>
+      <div class="card-grid" id="hauptgang-grid"></div>
+    </div>
 
-  <label for="beilage">Beilage:
-    <select id="beilage"></select>
-  </label>
+    <div id="step-beilage" class="step">
+      <h2>Wähle die Beilage</h2>
+      <div class="card-grid" id="beilage-grid"></div>
+    </div>
 
-  <label for="gemuese">Gemüse:
-    <select id="gemuese"></select>
-  </label>
+    <div id="step-gemuese" class="step">
+      <h2>Wähle das Gemüse</h2>
+      <div class="card-grid" id="gemuese-grid"></div>
+    </div>
 
-  <label for="dessert">Dessert:
-    <select id="dessert"></select>
-  </label>
+    <div id="step-dessert" class="step">
+      <h2>Wähle das Dessert</h2>
+      <div class="card-grid" id="dessert-grid"></div>
+    </div>
 
-  <div id="menue"></div>
+    <div id="step-summary" class="step">
+      <h2>Dein Menü</h2>
+      <div class="summary" id="summary"></div>
+      <button onclick="restart()">Nochmal von vorn</button>
+    </div>
+  </div>
 
   <script src="data.js"></script>
-  <script src="app.js"></script>
+  <script>
+    const auswahl = {};
+    const emojiMap = {
+      "Schnitzel": "🍽️", "Pizza": "🍕", "Bolognese": "🍝", "Tomatensauce": "🍅", "Käsesauce": "🧀",
+      "Pesto": "🌿", "Fischstäbchen": "🐟", "Chicken Nuggets": "🍗", "Bratwurst": "🍩", "Spaghetti": "🍝",
+      "Pommes": "🍟", "Kartoffelpüree": "🫓", "Reis": "🍚", "Brokkoli": "🥦", "Karotten": "🥕",
+      "Gurkensticks": "🥒", "Bohnen": "🌾", "Erbsen": "🥞", "Pudding": "🍮", "Eis": "🍦"
+    };
+
+    function createCards(items, gridId, nextStep, key) {
+      const grid = document.getElementById(gridId);
+      grid.innerHTML = "";
+      items.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "card";
+        const emoji = emojiMap[item] || "🍽️";
+        card.textContent = `${emoji} ${item}`;
+        card.onclick = () => {
+          auswahl[key] = item;
+          showStep(nextStep);
+          if (nextStep === "summary") {
+            showSummary();
+          }
+        };
+        grid.appendChild(card);
+      });
+    }
+
+    function showStep(step) {
+      document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
+      document.getElementById(`step-${step}`).classList.add("active");
+    }
+
+    function showSummary() {
+      const s = auswahl;
+      const html = `
+        <ul>
+          <li><strong>Hauptgang:</strong> ${s.hauptgang}</li>
+          <li><strong>Beilage:</strong> ${s.beilage}</li>
+          <li><strong>Gemüse:</strong> ${s.gemuese}</li>
+          <li><strong>Dessert:</strong> ${s.dessert}</li>
+        </ul>`;
+      document.getElementById("summary").innerHTML = html;
+    }
+
+    function restart() {
+      auswahl.hauptgang = "";
+      auswahl.beilage = "";
+      auswahl.gemuese = "";
+      auswahl.dessert = "";
+      showStep("hauptgang");
+    }
+
+    // Start initialisieren
+    window.onload = () => {
+      createCards(lebensmittel.hauptgang.slice(0, 12), "hauptgang-grid", "beilage", "hauptgang");
+      createCards(lebensmittel.beilage.slice(0, 12), "beilage-grid", "gemuese", "beilage");
+      createCards(lebensmittel.gemuese.slice(0, 12), "gemuese-grid", "dessert", "gemuese");
+      createCards(lebensmittel.dessert.slice(0, 12), "dessert-grid", "summary", "dessert");
+    };
+  </script>
 </body>
 </html>
