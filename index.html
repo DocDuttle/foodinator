@@ -48,8 +48,28 @@
     const auswahl = {};
 
     function createCards(items, gridId, nextStep, key) {
-      const grid = document.getElementById(gridId);
-      grid.innerHTML = "";
+  const container = document.getElementById(gridId).parentElement;
+  let searchInput = container.querySelector('input');
+  if (!searchInput) {
+    searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.placeholder = 'Suche...';
+    searchInput.className = 'w-full p-2 mt-2 mb-4 border border-gray-300 rounded';
+    container.insertBefore(searchInput, container.children[1]);
+  }
+
+  const grid = document.getElementById(gridId);
+  const sortedItems = items.slice().sort((a, b) => a.localeCompare(b));
+  function render(filteredItems) {
+      }
+
+  render(sortedItems);
+
+  searchInput.oninput = () => {
+    const query = searchInput.value.toLowerCase();
+    const filtered = sortedItems.filter(item => item.toLowerCase().includes(query));
+    render(filtered);
+  };
       items.forEach(item => {
         const card = document.createElement("div");
         card.className = "bg-white p-4 rounded-lg shadow hover:bg-blue-100 cursor-pointer text-center text-gray-800 font-medium transition";
@@ -61,7 +81,7 @@
             showSummary();
           }
         };
-        grid.appendChild(card);
+            grid.appendChild(card);
       });
     }
 
@@ -91,10 +111,10 @@
     }
 
     window.onload = () => {
-      createCards(lebensmittel.hauptgang.slice(0, 12), "hauptgang-grid", "beilage", "hauptgang");
-      createCards(lebensmittel.beilage.slice(0, 12), "beilage-grid", "gemuese", "beilage");
-      createCards(lebensmittel.gemuese.slice(0, 12), "gemuese-grid", "dessert", "gemuese");
-      createCards(lebensmittel.dessert.slice(0, 12), "dessert-grid", "summary", "dessert");
+      createCards(lebensmittel.hauptgang, "hauptgang-grid", "beilage", "hauptgang");
+      createCards(lebensmittel.beilage, "beilage-grid", "gemuese", "beilage");
+      createCards(lebensmittel.gemuese, "gemuese-grid", "dessert", "gemuese");
+      createCards(lebensmittel.dessert, "dessert-grid", "summary", "dessert");
     };
   </script>
 </body>
