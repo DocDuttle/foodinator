@@ -16,6 +16,29 @@
   <div class="w-full max-w-xl bg-white shadow-xl rounded-xl p-6">
     <h1 class="text-3xl font-semibold text-center text-blue-700 mb-6">Was gibt's zum Essen?</h1>
 
+    <!-- Status Tracker -->
+    <div id="status-tracker" class="flex justify-between items-center mb-6">
+      <div class="flex-1 flex flex-col items-center">
+        <div id="status-hauptgang" class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold bg-blue-500">1</div>
+        <span class="text-xs mt-1">Hauptgang</span>
+      </div>
+      <div class="flex-1 h-1 bg-blue-200 mx-1"></div>
+      <div class="flex-1 flex flex-col items-center">
+        <div id="status-beilage" class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold bg-blue-200">2</div>
+        <span class="text-xs mt-1">Beilage</span>
+      </div>
+      <div class="flex-1 h-1 bg-blue-200 mx-1"></div>
+      <div class="flex-1 flex flex-col items-center">
+        <div id="status-gemuese" class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold bg-blue-200">3</div>
+        <span class="text-xs mt-1">Gemüse</span>
+      </div>
+      <div class="flex-1 h-1 bg-blue-200 mx-1"></div>
+      <div class="flex-1 flex flex-col items-center">
+        <div id="status-dessert" class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold bg-blue-200">4</div>
+        <span class="text-xs mt-1">Dessert</span>
+      </div>
+    </div>
+
     <div id="step-hauptgang" class="step">
       <h2 class="text-xl font-medium text-gray-700">1. Hauptgang wählen</h2>
       <div id="hauptgang-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4"></div>
@@ -23,61 +46,111 @@
 
     <div id="step-beilage" class="step hidden">
       <h2 class="text-xl font-medium text-gray-700">2. Beilage wählen</h2>
+      <button id="back-beilage" class="mb-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded" onclick="goBack('hauptgang')">← Zurück</button>
       <div id="beilage-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4"></div>
     </div>
 
     <div id="step-gemuese" class="step hidden">
       <h2 class="text-xl font-medium text-gray-700">3. Gemüse wählen</h2>
+      <button id="back-gemuese" class="mb-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded" onclick="goBack('beilage')">← Zurück</button>
       <div id="gemuese-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4"></div>
     </div>
 
     <div id="step-dessert" class="step hidden">
       <h2 class="text-xl font-medium text-gray-700">4. Dessert wählen</h2>
+      <button id="back-dessert" class="mb-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded" onclick="goBack('gemuese')">← Zurück</button>
       <div id="dessert-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4"></div>
     </div>
 
     <div id="step-summary" class="step hidden">
       <h2 class="text-xl font-medium text-gray-700">Dein Menü</h2>
       <div id="summary" class="bg-blue-50 p-4 mt-4 rounded-lg shadow"></div>
-      <button onclick="restart()" class="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Neu starten</button>
     </div>
   </div>
 
   <script src="data.js"></script>
   <script>
     const auswahl = {};
+    let favorites = [];
 
-    function createCards(items, gridId, nextStep, key) {
-  const container = document.getElementById(gridId).parentElement;
-  let searchInput = container.querySelector('input');
-  if (!searchInput) {
-    searchInput = document.createElement('input');
-    searchInput.type = 'text';
-    searchInput.placeholder = 'Suche...';
-    searchInput.className = 'w-full p-2 mt-2 mb-4 border border-gray-300 rounded';
-    container.insertBefore(searchInput, container.children[1]);
-  }
+    function getKidStars(n) {
+      return '⭐'.repeat(n);
+    }
 
-  const grid = document.getElementById(gridId);
-  const sortedItems = items.slice().sort((a, b) => a.localeCompare(b));
-  function render(filteredItems) {
+    function filterBeilage(hauptgang) {
+      if (!hauptgang || !hauptgang.pairs_with_tags) return lebensmittel.beilage;
+      // Only show sides with tags matching the main's pairs_with_tags
+      return lebensmittel.beilage.filter(b => b.tags && b.tags.some(t => hauptgang.pairs_with_tags.includes(t)));
+    }
+
+    function getRandomMenu() {
+      // Only choose compatible menu
+      let hauptgang = lebensmittel.hauptgang[Math.floor(Math.random() * lebensmittel.hauptgang.length)];
+      let beilageOptions = filterBeilage(hauptgang);
+      let beilage = beilageOptions.length ? beilageOptions[Math.floor(Math.random() * beilageOptions.length)] : null;
+      let gemuese = lebensmittel.gemuese[Math.floor(Math.random() * lebensmittel.gemuese.length)];
+      let dessert = lebensmittel.dessert[Math.floor(Math.random() * lebensmittel.dessert.length)];
+      return { hauptgang, beilage, gemuese, dessert };
+    }
+
+    function createCards(items, gridId, nextStep, key, filterFn) {
+      const container = document.getElementById(gridId).parentElement;
+      let searchInput = container.querySelector('input');
+      if (!searchInput) {
+        searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        searchInput.placeholder = 'Suche...';
+        searchInput.className = 'w-full p-2 mt-2 mb-4 border border-gray-300 rounded';
+        container.insertBefore(searchInput, container.children[1]);
       }
-
-  render(sortedItems);
-
-  searchInput.oninput = () => {
-    const query = searchInput.value.toLowerCase();
-    const filtered = sortedItems.filter(item => item.toLowerCase().includes(query));
-    render(filtered);
-  };
-      items.forEach(item => {
-        const card = document.createElement("div");
-        card.className = "bg-white p-4 rounded-lg shadow hover:bg-blue-100 cursor-pointer text-center text-gray-800 font-medium transition";
-        card.textContent = item;
+      // Fix: add live search event listener only once
+      if (!searchInput.hasListener) {
+        searchInput.addEventListener('input', function() {
+          createCards(items, gridId, nextStep, key, filterFn);
+        });
+        searchInput.hasListener = true;
+      }
+      // Add "Surprise Me!" button
+      let surpriseBtn = container.querySelector('.surprise-btn');
+      if (!surpriseBtn) {
+        surpriseBtn = document.createElement('button');
+        surpriseBtn.textContent = '🎲 Überrasch mich!';
+        surpriseBtn.className = 'surprise-btn mb-4 ml-2 bg-yellow-300 hover:bg-yellow-400 text-yellow-900 font-bold px-3 py-1 rounded shadow';
+        surpriseBtn.onclick = () => {
+          const randomMenu = getRandomMenu();
+          auswahl.hauptgang = randomMenu.hauptgang;
+          auswahl.beilage = randomMenu.beilage;
+          auswahl.gemuese = randomMenu.gemuese;
+          auswahl.dessert = randomMenu.dessert;
+          showStep('summary');
+          showSummary();
+        };
+        container.insertBefore(surpriseBtn, searchInput.nextSibling);
+      }
+      const grid = document.getElementById(gridId);
+      grid.innerHTML = '';
+      let filtered = items;
+      if (filterFn) filtered = filtered.filter(filterFn);
+      const query = searchInput && searchInput.value ? searchInput.value.toLowerCase() : '';
+      if (query) {
+        filtered = filtered.filter(item => item.name.toLowerCase().includes(query));
+      }
+      const sortedItems = filtered.slice().sort((a, b) => b.kid_friendly - a.kid_friendly);
+      if (sortedItems.length === 0) {
+        const msg = document.createElement('div');
+        msg.className = 'text-center text-red-500 py-4';
+        msg.textContent = 'Keine passenden Optionen gefunden.';
+        grid.appendChild(msg);
+        return;
+      }
+      sortedItems.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'bg-white p-4 rounded-lg shadow hover:scale-105 hover:bg-blue-100 cursor-pointer text-center text-gray-800 font-medium transition transform duration-200 border-4 mb-2';
+        card.innerHTML = `<span style=\"font-size:2rem;\">${item.emoji}</span><br>${item.name}`;
         card.onclick = () => {
           auswahl[key] = item;
           showStep(nextStep);
-          if (nextStep === "summary") {
+          if (nextStep === 'summary') {
             showSummary();
           }
         };
@@ -88,34 +161,79 @@
     function showStep(step) {
       document.querySelectorAll(".step").forEach(s => s.classList.add("hidden"));
       document.getElementById(`step-${step}`).classList.remove("hidden");
+      updateStatusTracker(step);
+      if (step === "beilage" && auswahl.hauptgang) {
+        const beilageOptions = filterBeilage(auswahl.hauptgang);
+        // If there are no matching Beilage, skip to Gemüse
+        if (!auswahl.hauptgang.pairs_with_tags || auswahl.hauptgang.pairs_with_tags.length === 0 || beilageOptions.length === 0) {
+          auswahl.beilage = null;
+          showStep("gemuese");
+          return;
+        }
+        createCards(beilageOptions, "beilage-grid", "gemuese", "beilage");
+      } else if (step === "gemuese") {
+        createCards(lebensmittel.gemuese, "gemuese-grid", "dessert", "gemuese");
+      } else if (step === "dessert") {
+        createCards(lebensmittel.dessert, "dessert-grid", "summary", "dessert");
+      }
+    }
+
+    function goBack(prevStep) {
+      if (prevStep === 'hauptgang') {
+        auswahl.beilage = null;
+        showStep('hauptgang');
+      } else if (prevStep === 'beilage') {
+        auswahl.gemuese = null;
+        showStep('beilage');
+      } else if (prevStep === 'gemuese') {
+        auswahl.dessert = null;
+        showStep('gemuese');
+      }
+    }
+
+    function updateStatusTracker(currentStep) {
+      const steps = ['hauptgang', 'beilage', 'gemuese', 'dessert'];
+      steps.forEach((step, i) => {
+        const el = document.getElementById('status-' + step);
+        if (!el) return;
+        if (steps.indexOf(currentStep) > i) {
+          el.className = 'w-8 h-8 rounded-full flex items-center justify-center text-white font-bold bg-green-400';
+        } else if (steps.indexOf(currentStep) === i) {
+          el.className = 'w-8 h-8 rounded-full flex items-center justify-center text-white font-bold bg-blue-500';
+        } else {
+          el.className = 'w-8 h-8 rounded-full flex items-center justify-center text-white font-bold bg-blue-200';
+        }
+      });
     }
 
     function showSummary() {
       const s = auswahl;
       const html = `
         <ul class="space-y-2">
-          <li><strong>Hauptgang:</strong> ${s.hauptgang}</li>
-          <li><strong>Beilage:</strong> ${s.beilage}</li>
-          <li><strong>Gemüse:</strong> ${s.gemuese}</li>
-          <li><strong>Dessert:</strong> ${s.dessert}</li>
-        </ul>`;
+          <li><strong>Hauptgang:</strong> ${s.hauptgang ? s.hauptgang.emoji + ' ' + s.hauptgang.name : ''}</li>
+          <li><strong>Beilage:</strong> ${s.beilage ? s.beilage.emoji + ' ' + s.beilage.name : ''}</li>
+          <li><strong>Gemüse:</strong> ${s.gemuese ? s.gemuese.emoji + ' ' + s.gemuese.name : ''}</li>
+          <li><strong>Dessert:</strong> ${s.dessert ? s.dessert.emoji + ' ' + s.dessert.name : ''}</li>
+        </ul>
+        <div class="mt-4">
+          <button onclick="restart()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Neu starten</button>
+        </div>`;
       document.getElementById("summary").innerHTML = html;
     }
 
     function restart() {
-      auswahl.hauptgang = "";
-      auswahl.beilage = "";
-      auswahl.gemuese = "";
-      auswahl.dessert = "";
+      auswahl.hauptgang = null;
+      auswahl.beilage = null;
+      auswahl.gemuese = null;
+      auswahl.dessert = null;
       showStep("hauptgang");
+      updateStatusTracker('hauptgang');
     }
 
     window.onload = () => {
       createCards(lebensmittel.hauptgang, "hauptgang-grid", "beilage", "hauptgang");
-      createCards(lebensmittel.beilage, "beilage-grid", "gemuese", "beilage");
-      createCards(lebensmittel.gemuese, "gemuese-grid", "dessert", "gemuese");
-      createCards(lebensmittel.dessert, "dessert-grid", "summary", "dessert");
     };
+
   </script>
 </body>
 </html>
