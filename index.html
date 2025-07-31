@@ -1,24 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Was gibt's zum Essen?</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #fefefe;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 1.5rem;
+      font-weight: bold;
+    }
+    select {
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-top: 0.25rem;
+    }
+    #menue {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #f3f3f3;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    li {
+      margin: 0.5rem 0;
+    }
+  </style>
 </head>
 <body>
   <h1>Was gibt's zum Essen?</h1>
 
-  <label>Hauptgang:
-    <select id="hauptgang">
-      <option value="Schnitzel">Schnitzel</option>
-      <option value="Pasta">Pasta</option>
-    </select>
+  <label for="hauptgang">Hauptgang:
+    <select id="hauptgang"></select>
   </label>
 
-  <br /><br />
-
-  <label>Beilage:
+  <label for="beilage">Beilage:
     <select id="beilage"></select>
   </label>
+
+  <label for="gemuese">Gemüse:
+    <select id="gemuese"></select>
+  </label>
+
+  <label for="dessert">Dessert:
+    <select id="dessert"></select>
+  </label>
+
+  <div id="menue"></div>
 
   <script src="data.js"></script>
   <script src="app.js"></script>
