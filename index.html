@@ -6,13 +6,9 @@
   <title>Was gibt's zum Essen?</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-  </style>
+  <link href="fancy-fonts.css" rel="stylesheet">
 </head>
-<body class="bg-gradient-to-br from-gray-100 to-white min-h-screen flex items-center justify-center p-4 overflow-x-hidden">
+<body class="bg-gradient-to-br from-gray-100 to-white min-h-screen p-4 overflow-x-hidden flex justify-center">
   <!-- Login Form -->
   <div id="login-screen" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-90 z-50 hidden">
     <div class="bg-white p-6 rounded-xl shadow-xl w-full max-w-xs flex flex-col items-center">
@@ -23,38 +19,49 @@
   </div>
   <!-- Customization Screen -->
   <div id="customize-screen" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-95 z-50 hidden overflow-y-auto">
-    <div class="bg-white p-6 rounded-xl shadow-xl w-full max-w-lg">
-      <h2 class="text-xl font-semibold mb-4 text-blue-700">Menü anpassen</h2>
-      <form id="customize-form">
+    <div class="bg-white p-0 rounded-xl shadow-xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-y-auto">
+      <div class="sticky top-0 z-10 bg-white p-6 pb-2 rounded-t-xl">
+        <h2 class="text-xl font-semibold mb-4 text-blue-700">Menü anpassen</h2>
+      </div>
+      <form id="customize-form" class="flex-1 flex flex-col px-6 pb-2 overflow-y-auto">
         <div class="mb-4">
           <h3 class="font-bold mb-2">Hauptgang</h3>
-          <div id="customize-hauptgang" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+          <div id="customize-hauptgang" class="grid grid-cols-2 gap-2 min-h-[6rem]"></div>
         </div>
         <div class="mb-4">
           <h3 class="font-bold mb-2">Beilage</h3>
-          <div id="customize-beilage" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+          <div id="customize-beilage" class="grid grid-cols-2 gap-2 min-h-[6rem]"></div>
         </div>
         <div class="mb-4">
           <h3 class="font-bold mb-2">Gemüse</h3>
-          <div id="customize-gemuese" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+          <div id="customize-gemuese" class="grid grid-cols-2 gap-2 min-h-[6rem]"></div>
         </div>
         <div class="mb-4">
           <h3 class="font-bold mb-2">Dessert</h3>
-          <div id="customize-dessert" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
+          <div id="customize-dessert" class="grid grid-cols-2 gap-2 min-h-[6rem]"></div>
         </div>
-        <div class="flex gap-2 mt-6">
+        <div class="flex gap-2 mt-6 sticky bottom-0 bg-white py-2">
           <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Speichern</button>
           <button type="button" id="customize-cancel" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded">Zurück</button>
         </div>
+        <button type="button" id="customize-scrolltop" class="w-full mt-2 mb-2 text-blue-500 underline text-sm">Nach oben</button>
       </form>
     </div>
   </div>
-  <div class="w-full max-w-xl bg-white shadow-xl rounded-xl p-4 sm:p-6 overflow-x-hidden">
+  <div class="w-full max-w-xl bg-white shadow-xl rounded-xl p-4 sm:p-6 overflow-x-hidden min-h-[38rem]">
     <button id="logout-btn" class="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm hidden">Logout</button>
-    <h1 class="text-3xl font-semibold text-center text-blue-700 mb-6">Was gibt's zum Essen?</h1>
+    <!-- Professional Header Card -->
+    <div class="menu-header-card">
+      <div class="menu-header-badge">Foodinator</div>
+      <div class="menu-header-content">
+        <span class="menu-header-emoji">🍽️</span>
+        <h1 class="menu-header-title">Was gibt's zum Essen?</h1>
+        <p class="menu-header-subtitle">Weil „Ich weiß nicht…“ keine Mahlzeit ist.</p>
+      </div>
+    </div>
     <button id="customize-btn" class="w-full mb-4 bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded font-semibold hidden">Menü anpassen</button>
 
-    <!-- Status Tracker -->
+    <!-- Enhanced Status Tracker -->
     <div id="status-tracker" class="flex justify-between items-center mb-6">
       <div class="flex-1 flex flex-col items-center">
         <div id="status-hauptgang" class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold bg-blue-500">1</div>
@@ -79,25 +86,25 @@
 
     <div id="step-hauptgang" class="step">
       <h2 class="text-xl font-medium text-gray-700">1. Hauptgang wählen</h2>
-      <div id="hauptgang-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 gap-y-6 mt-4"></div>
+      <div id="hauptgang-grid" class="menu-grid grid grid-cols-3 gap-4 gap-y-6 mt-4 min-h-[20rem]"></div>
     </div>
 
     <div id="step-beilage" class="step hidden">
       <h2 class="text-xl font-medium text-gray-700">2. Beilage wählen</h2>
       <button id="back-beilage" class="mb-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded" onclick="goBack('hauptgang')">← Zurück</button>
-      <div id="beilage-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 gap-y-6 mt-4"></div>
+      <div id="beilage-grid" class="menu-grid grid grid-cols-3 gap-4 gap-y-6 mt-4 min-h-[20rem]"></div>
     </div>
 
     <div id="step-gemuese" class="step hidden">
       <h2 class="text-xl font-medium text-gray-700">3. Gemüse wählen</h2>
       <button id="back-gemuese" class="mb-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded" onclick="goBack('beilage')">← Zurück</button>
-      <div id="gemuese-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 gap-y-6 mt-4"></div>
+      <div id="gemuese-grid" class="menu-grid grid grid-cols-3 gap-4 gap-y-6 mt-4 min-h-[20rem]"></div>
     </div>
 
     <div id="step-dessert" class="step hidden">
       <h2 class="text-xl font-medium text-gray-700">4. Dessert wählen</h2>
       <button id="back-dessert" class="mb-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded" onclick="goBack('gemuese')">← Zurück</button>
-      <div id="dessert-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 gap-y-6 mt-4"></div>
+      <div id="dessert-grid" class="menu-grid grid grid-cols-3 gap-4 gap-y-6 mt-4 min-h-[20rem]"></div>
     </div>
 
     <div id="step-summary" class="step hidden">
@@ -132,19 +139,34 @@
     }
 
     function createCards(items, gridId, nextStep, key, filterFn) {
+      // --- Bulletproof single-row fix: apply .single-row if only one row
+      setTimeout(() => {
+        const grid = document.getElementById(gridId);
+        if (grid) {
+          grid.classList.remove('single-row');
+          // On desktop, grid is max 4 columns. If items < 4, force flex fallback.
+          if (items.length < 4) {
+            grid.classList.add('single-row');
+          }
+        }
+      }, 0);
       const container = document.getElementById(gridId).parentElement;
       let searchInput = container.querySelector('input');
       if (!searchInput) {
         searchInput = document.createElement('input');
         searchInput.type = 'text';
         searchInput.placeholder = 'Suche...';
-        searchInput.className = 'w-full p-2 mt-2 mb-4 border border-gray-300 rounded';
+        searchInput.className = 'search-input w-full p-2 mt-2 mb-4 border border-gray-300 rounded';
         container.insertBefore(searchInput, container.children[1]);
       }
-      // Fix: add live search event listener only once
+      // Enhanced search with debouncing
       if (!searchInput.hasListener) {
+        let searchTimeout;
         searchInput.addEventListener('input', function() {
-          createCards(items, gridId, nextStep, key, filterFn);
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => {
+            createCards(items, gridId, nextStep, key, filterFn);
+          }, 300);
         });
         searchInput.hasListener = true;
       }
@@ -183,24 +205,58 @@
       }
       sortedItems.forEach(item => {
         const card = document.createElement('div');
-        card.className = 'aspect-square flex flex-col items-center justify-center bg-white p-4 rounded-xl shadow-lg border hover:scale-105 hover:bg-blue-100 cursor-pointer text-center text-gray-800 font-semibold transition transform duration-200 overflow-hidden w-full';
-        card.innerHTML = `<span class='text-4xl mb-2 truncate w-full block text-center'>${item.emoji}</span><span class='text-base font-semibold text-gray-800 break-words text-center w-full truncate'>${item.name}</span>`;
+        card.className = 'menu-card bg-white border border-gray-200 rounded-lg p-4 text-center hover:shadow-lg transition-shadow cursor-pointer';
+        card.innerHTML = `<span class='text-4xl mb-2 block w-full text-center'>${item.emoji}</span><span class='text-base font-semibold text-gray-800 block w-full break-words whitespace-normal text-center'>${item.name}</span>`;
         card.onclick = () => {
-          auswahl[key] = item;
-          showStep(nextStep);
-          if (nextStep === 'summary') {
-            showSummary();
-          }
+          // Add loading state
+          card.classList.add('loading');
+          setTimeout(() => {
+            auswahl[key] = item;
+            card.classList.remove('loading');
+            card.classList.add('success-animation');
+            setTimeout(() => {
+              showStep(nextStep);
+              if (nextStep === 'summary') {
+                showSummary();
+              }
+            }, 300);
+          }, 200);
         };
-            grid.appendChild(card);
+        grid.appendChild(card);
       });
     }
 
     function showStep(step) {
-      document.querySelectorAll(".step").forEach(s => s.classList.add("hidden"));
-      document.getElementById(`step-${step}`).classList.remove("hidden");
-      updateStatusTracker(step);
-      if (step === "beilage" && auswahl.hauptgang) {
+  // Add fade-out animation to current step
+  const currentStep = document.querySelector('.step:not(.hidden)');
+  if (currentStep) {
+    currentStep.classList.add('fade-out');
+    setTimeout(() => {
+      document.querySelectorAll(".step").forEach(s => {
+        s.classList.add("hidden");
+        s.classList.remove('fade-out');
+      });
+      
+      const newStep = document.getElementById(`step-${step}`);
+      newStep.classList.remove("hidden");
+      newStep.classList.add('fade-in');
+      
+      setTimeout(() => newStep.classList.remove('fade-in'), 300);
+    }, 150);
+  } else {
+    document.querySelectorAll(".step").forEach(s => s.classList.add("hidden"));
+    const newStep = document.getElementById(`step-${step}`);
+    newStep.classList.remove("hidden");
+    newStep.classList.add('fade-in');
+    setTimeout(() => newStep.classList.remove('fade-in'), 300);
+  }
+  
+  updateStatusTracker(step);
+  // Scroll main container to top after step change
+  const mainContainer = document.querySelector('.max-w-xl');
+  if (mainContainer) mainContainer.scrollIntoView({behavior: 'smooth', block: 'start'});
+  window.scrollTo({top: 0, behavior: 'smooth'});
+  if (step === "beilage" && auswahl.hauptgang) {
         const beilageOptions = filterBeilage(auswahl.hauptgang);
         // If there are no matching Beilage, skip to Gemüse
         if (!auswahl.hauptgang.pairs_with_tags || auswahl.hauptgang.pairs_with_tags.length === 0 || beilageOptions.length === 0) {
@@ -245,158 +301,258 @@
     }
 
     function showSummary() {
-      const s = auswahl;
-      const html = `
-        <ul class="space-y-2">
-          <li><strong>Hauptgang:</strong> ${s.hauptgang ? s.hauptgang.emoji + ' ' + s.hauptgang.name : ''}</li>
-          <li><strong>Beilage:</strong> ${s.beilage ? s.beilage.emoji + ' ' + s.beilage.name : ''}</li>
-          <li><strong>Gemüse:</strong> ${s.gemuese ? s.gemuese.emoji + ' ' + s.gemuese.name : ''}</li>
-          <li><strong>Dessert:</strong> ${s.dessert ? s.dessert.emoji + ' ' + s.dessert.name : ''}</li>
-        </ul>
-        <div class="mt-4">
-          <button onclick="restart()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Neu starten</button>
-        </div>`;
-      document.getElementById("summary").innerHTML = html;
-    }
+  const s = auswahl;
+  const html = `
+    <div class="relative bg-white rounded-2xl shadow-2xl border-2 border-blue-200 max-w-md mx-auto px-6 py-8 mt-2 mb-2">
+      <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 to-blue-300 text-white px-6 py-1 rounded-full shadow text-lg font-bold tracking-wide">Dein Menü</div>
+      <div class="flex flex-col gap-4 mt-6">
+        <div class="flex items-center gap-4">
+          <span class="text-3xl md:text-4xl">${s.hauptgang ? s.hauptgang.emoji : '🍽️'}</span>
+          <div>
+            <div class="text-blue-700 font-semibold text-lg leading-tight">Hauptgang</div>
+            <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.hauptgang ? s.hauptgang.name : ''}</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="text-3xl md:text-4xl">${s.beilage ? s.beilage.emoji : '🥔'}</span>
+          <div>
+            <div class="text-blue-700 font-semibold text-lg leading-tight">Beilage</div>
+            <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.beilage ? s.beilage.name : ''}</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="text-3xl md:text-4xl">${s.gemuese ? s.gemuese.emoji : '🥦'}</span>
+          <div>
+            <div class="text-blue-700 font-semibold text-lg leading-tight">Gemüse</div>
+            <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.gemuese ? s.gemuese.name : ''}</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="text-3xl md:text-4xl">${s.dessert ? s.dessert.emoji : '🍨'}</span>
+          <div>
+            <div class="text-blue-700 font-semibold text-lg leading-tight">Dessert</div>
+            <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.dessert ? s.dessert.name : ''}</div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-8 flex flex-col items-center">
+        <button onclick="restart()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-semibold shadow">Neu starten</button>
+        <div class="mt-4 text-lg italic text-blue-500 font-pacifico">Bon Appétit!</div>
+      </div>
+    </div>
+  `;
+  document.getElementById("summary").innerHTML = html;
+}
 
-    function restart() {
-      auswahl.hauptgang = null;
-      auswahl.beilage = null;
-      auswahl.gemuese = null;
-      auswahl.dessert = null;
-      showStep("hauptgang");
-      updateStatusTracker('hauptgang');
-    }
+function restart() {
+  auswahl.hauptgang = null;
+  auswahl.beilage = null;
+  auswahl.gemuese = null;
+  auswahl.dessert = null;
+  showStep("hauptgang");
+  updateStatusTracker('hauptgang');
+}
 
-    window.onload = () => {
-      createCards(lebensmittel.hauptgang, "hauptgang-grid", "beilage", "hauptgang");
+function updateStatusTracker(currentStep) {
+  const steps = ['hauptgang', 'beilage', 'gemuese', 'dessert'];
+  steps.forEach((step, i) => {
+    const el = document.getElementById('status-' + step);
+    if (!el) return;
+    
+    if (steps.indexOf(currentStep) > i) {
+      el.className = 'w-8 h-8 rounded-full flex items-center justify-center text-white font-bold bg-green-400';
+    } else if (steps.indexOf(currentStep) === i) {
+      el.className = 'w-8 h-8 rounded-full flex items-center justify-center text-white font-bold bg-blue-500';
+    } else {
+      el.className = 'w-8 h-8 rounded-full flex items-center justify-center text-white font-bold bg-blue-200';
+    }
+  });
+}
+
+  function showSummary() {
+    const s = auswahl;
+    const html = `
+      <div class="relative bg-white rounded-2xl shadow-2xl border-2 border-blue-200 max-w-md mx-auto px-6 py-8 mt-2 mb-2">
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 to-blue-300 text-white px-6 py-1 rounded-full shadow text-lg font-bold tracking-wide">Dein Menü</div>
+        <div class="flex flex-col gap-4 mt-6">
+          <div class="flex items-center gap-4">
+            <span class="text-3xl md:text-4xl">${s.hauptgang ? s.hauptgang.emoji : '🍽️'}</span>
+            <div>
+              <div class="text-blue-700 font-semibold text-lg leading-tight">Hauptgang</div>
+              <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.hauptgang ? s.hauptgang.name : ''}</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <span class="text-3xl md:text-4xl">${s.beilage ? s.beilage.emoji : '🥔'}</span>
+            <div>
+              <div class="text-blue-700 font-semibold text-lg leading-tight">Beilage</div>
+              <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.beilage ? s.beilage.name : ''}</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <span class="text-3xl md:text-4xl">${s.gemuese ? s.gemuese.emoji : '🥦'}</span>
+            <div>
+              <div class="text-blue-700 font-semibold text-lg leading-tight">Gemüse</div>
+              <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.gemuese ? s.gemuese.name : ''}</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <span class="text-3xl md:text-4xl">${s.dessert ? s.dessert.emoji : '🍨'}</span>
+            <div>
+              <div class="text-blue-700 font-semibold text-lg leading-tight">Dessert</div>
+              <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.dessert ? s.dessert.name : ''}</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-8 flex flex-col items-center">
+          <button onclick="restart()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-semibold shadow">Neu starten</button>
+          <div class="mt-4 text-lg italic text-blue-500 font-pacifico">Bon Appétit!</div>
+        </div>
+      </div>
+    `;
+    document.getElementById("summary").innerHTML = html;
+  }
+
+  function restart() {
+    auswahl.hauptgang = null;
+    auswahl.beilage = null;
+    auswahl.gemuese = null;
+    auswahl.dessert = null;
+    showStep("hauptgang");
+    updateStatusTracker('hauptgang');
+  }
+
+  // --- Auth & Customization State ---
+  const LS_USER_KEY = 'essenapp_user';
+  const LS_ACTIVE_KEY = user => `essenapp_active_${user}`;
+
+  function getUser() {
+    return localStorage.getItem(LS_USER_KEY);
+  }
+  function setUser(u) {
+    localStorage.setItem(LS_USER_KEY, u);
+  }
+  function removeUser() {
+    localStorage.removeItem(LS_USER_KEY);
+  }
+  function getActiveMap() {
+    const user = getUser();
+    if (!user) return {};
+    try {
+      return JSON.parse(localStorage.getItem(LS_ACTIVE_KEY(user))) || {};
+    } catch { return {}; }
+  }
+  function setActiveMap(map) {
+    const user = getUser();
+    if (!user) return;
+    localStorage.setItem(LS_ACTIVE_KEY(user), JSON.stringify(map));
+  }
+  function isActive(type, idx) {
+    const map = getActiveMap();
+    if (!map[type]) return true;
+    if (typeof map[type][idx] === 'boolean') return map[type][idx];
+    return true;
+  }
+
+  // --- DOM helpers and utilities ---
+  const toggleElement = (id, show) => document.getElementById(id).classList.toggle('hidden', !show);
+  const showLogin = (show) => toggleElement('login-screen', show);
+  const showCustomize = (show) => toggleElement('customize-screen', show);
+  const showApp = (show) => document.querySelector('.max-w-xl').classList.toggle('hidden', !show);
+  const showCustomizeBtn = (show) => toggleElement('customize-btn', show);
+  const showLogoutBtn = (show) => toggleElement('logout-btn', show);
+  
+  // Event delegation utility
+  const handleClick = (e) => {
+    const handlers = {
+      'login-btn': () => {
+        const u = document.getElementById('login-username').value.trim();
+        if (u) { setUser(u); checkLogin(); location.reload(); }
+      },
+      'logout-btn': () => { removeUser(); location.reload(); },
+      'customize-btn': () => {
+        populateCustomizeForm();
+        showCustomize(true);
+        setTimeout(() => {
+          const customizeDiv = document.querySelector('#customize-screen > div.overflow-y-auto');
+          if (customizeDiv) customizeDiv.scrollTo({top: 0, behavior: 'smooth'});
+        }, 50);
+      },
+      'customize-cancel': () => showCustomize(false)
     };
+    
+    if (handlers[e.target.id]) {
+      handlers[e.target.id]();
+    }
+  };
 
-  </script>
-</body>
-<script>
-// --- Auth & Customization State ---
-const LS_USER_KEY = 'essenapp_user';
-const LS_ACTIVE_KEY = user => `essenapp_active_${user}`;
-
-function getUser() {
-  return localStorage.getItem(LS_USER_KEY);
-}
-function setUser(u) {
-  localStorage.setItem(LS_USER_KEY, u);
-}
-function removeUser() {
-  localStorage.removeItem(LS_USER_KEY);
-}
-function getActiveMap() {
-  const user = getUser();
-  if (!user) return {};
-  try {
-    return JSON.parse(localStorage.getItem(LS_ACTIVE_KEY(user))) || {};
-  } catch { return {}; }
-}
-function setActiveMap(map) {
-  const user = getUser();
-  if (!user) return;
-  localStorage.setItem(LS_ACTIVE_KEY(user), JSON.stringify(map));
-}
-function isActive(type, idx) {
-  const map = getActiveMap();
-  if (!map[type]) return true;
-  if (typeof map[type][idx] === 'boolean') return map[type][idx];
-  return true;
-}
-
-// --- DOM helpers ---
-function showLogin(show) {
-  document.getElementById('login-screen').classList.toggle('hidden', !show);
-}
-function showCustomize(show) {
-  document.getElementById('customize-screen').classList.toggle('hidden', !show);
-}
-function showApp(show) {
-  document.querySelector('.max-w-xl').classList.toggle('hidden', !show);
-}
-function showCustomizeBtn(show) {
-  document.getElementById('customize-btn').classList.toggle('hidden', !show);
-}
-function showLogoutBtn(show) {
-  document.getElementById('logout-btn').classList.toggle('hidden', !show);
-}
-
-// --- Login/logout logic ---
-function checkLogin() {
-  const user = getUser();
-  if (!user) {
-    showLogin(true); showApp(false); showCustomizeBtn(false); showLogoutBtn(false);
-  } else {
-    showLogin(false); showApp(true); showCustomizeBtn(true); showLogoutBtn(true);
+  // --- Login/logout logic ---
+  function checkLogin() {
+    const user = getUser();
+    if (!user) {
+      showLogin(true); showApp(false); showCustomizeBtn(false); showLogoutBtn(false);
+    } else {
+      showLogin(false); showApp(true); showCustomizeBtn(true); showLogoutBtn(true);
+    }
   }
-}
-document.getElementById('login-btn').onclick = function() {
-  const u = document.getElementById('login-username').value.trim();
-  if (u) { setUser(u); checkLogin(); location.reload(); }
-};
-document.getElementById('logout-btn').onclick = function() {
-  removeUser(); location.reload();
-};
-
-// --- Customize logic ---
-document.getElementById('customize-btn').onclick = function() {
-  populateCustomizeForm();
-  showCustomize(true);
-};
-document.getElementById('customize-cancel').onclick = function() {
-  showCustomize(false);
-};
-document.getElementById('customize-form').onsubmit = function(e) {
-  e.preventDefault();
-  const map = { hauptgang: [], beilage: [], gemuese: [], dessert: [] };
-  ['hauptgang','beilage','gemuese','dessert'].forEach(type => {
-    const boxes = document.querySelectorAll(`#customize-${type} input[type=checkbox]`);
-    boxes.forEach((cb,i) => { map[type][i] = cb.checked; });
-  });
-  setActiveMap(map);
-  showCustomize(false);
-  location.reload();
-};
-function populateCustomizeForm() {
-  const map = getActiveMap();
-  [
-    ['hauptgang', lebensmittel.hauptgang],
-    ['beilage', lebensmittel.beilage],
-    ['gemuese', lebensmittel.gemuese],
-    ['dessert', lebensmittel.dessert]
-  ].forEach(([type, arr]) => {
-    const cont = document.getElementById('customize-' + type);
-    cont.innerHTML = '';
-    arr.forEach((item, idx) => {
-      const id = `cb-${type}-${idx}`;
-      const checked = (map[type] === undefined || map[type][idx] === undefined) ? true : !!map[type][idx];
-      cont.innerHTML += `<label class='flex items-center gap-2 bg-gray-50 rounded px-2 py-1'><input type='checkbox' id='${id}' ${checked ? 'checked' : ''}/> <span class='text-xl'>${item.emoji}</span> <span>${item.name}</span></label>`;
+  // Use event delegation for cleaner code
+  document.addEventListener('click', handleClick);
+  document.getElementById('customize-form').onsubmit = function(e) {
+    e.preventDefault();
+    const map = { hauptgang: [], beilage: [], gemuese: [], dessert: [] };
+    ['hauptgang','beilage','gemuese','dessert'].forEach(type => {
+      const boxes = document.querySelectorAll(`#customize-${type} input[type=checkbox]`);
+      boxes.forEach((cb,i) => { map[type][i] = cb.checked; });
     });
-  });
-}
-
-// --- Patch menu filtering (cards) ---
-const origCreateCards = createCards;
-createCards = function(items, gridId, nextStep, key, filterFn) {
-  // Only show active items
-  let arrType = null;
-  if (gridId.includes('hauptgang')) arrType = 'hauptgang';
-  else if (gridId.includes('beilage')) arrType = 'beilage';
-  else if (gridId.includes('gemuese')) arrType = 'gemuese';
-  else if (gridId.includes('dessert')) arrType = 'dessert';
-  let filtered = items;
-  if (arrType) {
-    filtered = items.filter((item, idx) => isActive(arrType, idx));
+    setActiveMap(map);
+    showCustomize(false);
+    location.reload();
+  };
+  function populateCustomizeForm() {
+    const map = getActiveMap();
+    [
+      ['hauptgang', lebensmittel.hauptgang],
+      ['beilage', lebensmittel.beilage],
+      ['gemuese', lebensmittel.gemuese],
+      ['dessert', lebensmittel.dessert]
+    ].forEach(([type, arr]) => {
+      const cont = document.getElementById('customize-' + type);
+      cont.innerHTML = '';
+      arr.forEach((item, idx) => {
+        const id = `cb-${type}-${idx}`;
+        const checked = (map[type] === undefined || map[type][idx] === undefined) ? true : !!map[type][idx];
+        cont.innerHTML += `<label class='flex items-start gap-2 bg-gray-50 rounded px-2 py-1 min-w-0 min-h-[2.25rem] w-full'><input type='checkbox' id='${id}' ${checked ? 'checked' : ''} class='mt-1'/> <span class='text-lg flex-shrink-0'>${item.emoji}</span> <span class='block w-full break-words whitespace-normal text-base'>${item.name}</span></label>`;
+      });
+    });
   }
-  if (filterFn) filtered = filtered.filter(filterFn);
-  return origCreateCards(filtered, gridId, nextStep, key, null);
-};
 
-// --- Hide screens on load, check login ---
-window.addEventListener('DOMContentLoaded', checkLogin);
+  // --- Patch menu filtering (cards) ---
+  document.addEventListener('DOMContentLoaded', function() {
+    checkLogin();
+    const origCreateCards = createCards;
+    createCards = function(items, gridId, nextStep, key, filterFn) {
+      let arrType = null;
+      if (gridId.includes('hauptgang')) arrType = 'hauptgang';
+      else if (gridId.includes('beilage')) arrType = 'beilage';
+      else if (gridId.includes('gemuese')) arrType = 'gemuese';
+      else if (gridId.includes('dessert')) arrType = 'dessert';
+      let filtered = items;
+      if (arrType) {
+        filtered = items.filter((item, idx) => isActive(arrType, idx));
+      }
+      if (filterFn) filtered = filtered.filter(filterFn);
+      return origCreateCards(filtered, gridId, nextStep, key, filterFn);
+    };
+    createCards(lebensmittel.hauptgang, "hauptgang-grid", "beilage", "hauptgang");
+    // Nach oben button in customize menu
+    const customizeScrollTopBtn = document.getElementById('customize-scrolltop');
+    if (customizeScrollTopBtn) {
+      customizeScrollTopBtn.onclick = function() {
+        const customizeDiv = document.querySelector('#customize-screen > div.overflow-y-auto');
+        if (customizeDiv) customizeDiv.scrollTo({top: 0, behavior: 'smooth'});
+      };
+    }
+  });
 </script>
 </body>
 </html>
