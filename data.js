@@ -1,32 +1,81 @@
 const lebensmittel = {
-  hauptgang: [
-    "Bolognese", "Tomatensauce", "Käsesauce", "Pesto", "Schnitzel", "Fischstäbchen",
-    "Chicken Nuggets", "Bratwurst", "Pizza", "Currywurst", "Wiener Würstchen",
-    "Hackbällchen", "Pfannkuchen", "Rührei", "Spiegelei", "Omelett", "Frikadellen",
-    "Kaiserschmarrn", "Gemüsesuppe", "Tomatensuppe", "Kartoffelsuppe", "Gulaschsuppe",
-    "Lasagne", "Maultaschen", "Linsensuppe", "Chili sin Carne", "Reis mit Sojasauce",
-    "Rahmspinat mit Ei", "Rahmschnitzel", "Käsetoast"
-  ],
-  beilage: [
-    "Spaghetti", "Farfalle", "Gnocchi", "Tortellini", "Pommes", "Kartoffelpüree",
-    "Kartoffeln", "Reis", "Nudeln klassisch", "Couscous", "Polenta", "Butterbrot",
-    "Weißbrot", "Vollkornbrot", "Brötchen", "Toast", "Rösti", "Kroketten", "Ofenkartoffeln",
-    "Salzkartoffeln", "Grießnocken", "Kartoffelknödel", "Bulgur", "Maiskolben",
-    "Süßkartoffelpommes", "Knoblauchbrot", "Pitabrot", "Baguette", "Naan", "Blätterteigstangen"
-  ],
-  gemuese: [
-    "Brokkoli", "Karotten", "Gurkensticks", "Bohnen", "Erbsen", "Mais", "Spinat",
-    "Zucchini", "Paprika", "Kohlrabi", "Tomaten", "Blumenkohl", "Rote Bete", "Radieschen",
-    "Lauch", "Fenchel", "Champignons", "Spargel", "Edamame", "Rosenkohl", "Zwiebeln",
-    "Knoblauch", "Avocado", "Kürbis", "Sellerie", "Mangold", "Chinakohl", "Linsen",
-    "Sauerkraut", "Maisgemüse"
-  ],
-  dessert: [
-    "Pudding", "Vanilleeis", "Früchtequark", "Joghurt", "Apfelmus", "Milchreis",
-    "Wackelpudding", "Erdbeeren mit Sahne", "Banane", "Kakao", "Schokomousse", "Pfirsichhälften",
-    "Apfelscheiben", "Eis am Stiel", "Götterspeise", "Früchtebecher", "Bananenshake",
-    "Kinderkeks", "Mini-Donut", "Schokobrötchen", "Kaiserschmarrn", "Rosinenbrot",
-    "Beerenmix", "Obstsalat", "Grießbrei", "Marillenknödel", "Pancakes", "Vanillekipferl",
-    "Nutella-Crêpe", "Birne Helene"
-  ]
-};
+    hauptgang: [
+      { name: "Bolognese", emoji: "🍝", pairs_with_tags: ["pasta"] },
+      { name: "Tomatensauce", emoji: "🍅", pairs_with_tags: ["pasta"] },
+      { name: "Käsesauce", emoji: "🧀", pairs_with_tags: ["pasta"] },
+      { name: "Pesto", emoji: "🌿", pairs_with_tags: ["pasta"] },
+      { name: "Älplermagronen", emoji: "🧀", pairs_with_tags: [] },
+      { name: "Lasagne", emoji: "🍝", pairs_with_tags: [] },
+      { name: "Schinken-Käse-Auflauf", emoji: "🥘", pairs_with_tags: ["pasta"] },
+      { name: "Schnitzel", emoji: "🍖", pairs_with_tags: ["kartoffel", "brot"] },
+      { name: "Rahmschnitzel", emoji: "🍖", pairs_with_tags: ["kartoffel", "reis"] },
+      { name: "Frikadellen", emoji: "🍖", pairs_with_tags: ["kartoffel", "brot"] },
+      { name: "Bratwurst", emoji: "🌭", pairs_with_tags: ["kartoffel", "brot"] },
+      { name: "Wienerli", emoji: "🌭", pairs_with_tags: ["kartoffel", "brot"] },
+      { name: "Fischstäbchen", emoji: "🐟", pairs_with_tags: ["kartoffel"] },
+      { name: "Chicken Nuggets", emoji: "🍗", pairs_with_tags: ["kartoffel"] },
+      { name: "Rührei", emoji: "🥚", pairs_with_tags: ["brot"] },
+      { name: "Spiegelei", emoji: "🥚", pairs_with_tags: ["brot"] },
+      { name: "Omelett", emoji: "🥚", pairs_with_tags: ["brot"] },
+      { name: "Pfannkuchen", emoji: "🥞", pairs_with_tags: [] },
+      { name: "Kaiserschmarrn", emoji: "🥞", pairs_with_tags: [] },
+      { name: "Käsetoast", emoji: "🧀", pairs_with_tags: [] },
+      { name: "Pizza", emoji: "🍕", pairs_with_tags: [] },
+      { name: "Gemüsesuppe", emoji: "🥕", pairs_with_tags: [] },
+      { name: "Tomatensuppe", emoji: "🍅", pairs_with_tags: [] },
+      { name: "Kartoffelsuppe", emoji: "🥔", pairs_with_tags: [] },
+      { name: "Linsensuppe", emoji: "🥣", pairs_with_tags: [] },
+      { name: "Gulaschsuppe", emoji: "🍲", pairs_with_tags: ["brot"] },
+      { name: "Chili sin Carne", emoji: "🌶️", pairs_with_tags: ["reis", "brot"] },
+      { name: "Reis mit Sojasauce", emoji: "🍚", pairs_with_tags: [] },
+      { name: "Rahmspinat mit Ei", emoji: "🥦", pairs_with_tags: ["kartoffel"] },
+      { name: "Maultaschen", emoji: "🥟", pairs_with_tags: [] }
+    ],
+    beilage: [
+      { name: "Nudeln", emoji: "🍝", tags: ["pasta"] },
+      { name: "Gnocchi", emoji: "🥔", tags: ["kartoffel"] },
+      { name: "Kartoffelbrei", emoji: "🥔", tags: ["kartoffel"] },
+      { name: "Tortellini", emoji: "🥟", tags: ["pasta"] },
+      { name: "Brot", emoji: "🍞", tags: ["brot"] },
+      { name: "Ebly", emoji: "🌾", tags: ["reis"] },
+      { name: "Pommes", emoji: "🍟", tags: ["kartoffel"] },
+      { name: "Spätzle", emoji: "🍝", tags: ["pasta"] },
+      { name: "Kartoffeln", emoji: "🥔", tags: ["kartoffel"] },
+      { name: "Rösti", emoji: "🥔", tags: ["kartoffel"] },
+      { name: "Reis", emoji: "🍚", tags: ["reis"] }
+    ],
+    gemuese: [
+      { name: "Rohkost", emoji: "🥕" },
+      { name: "Karotten", emoji: "🥕" },
+      { name: "Gurkensticks", emoji: "🥒" },
+      { name: "Brokkoli", emoji: "🥦" },
+      { name: "Spinat", emoji: "🥬" },
+      { name: "Erbsen", emoji: "🫛" },
+      { name: "Mais", emoji: "🌽" },
+      { name: "Tomaten", emoji: "🍅" },
+      { name: "Rosenkohl", emoji: "🥬" },
+      { name: "Paprika", emoji: "🫑" }
+    ],
+    dessert: [
+      { name: "Pudding", emoji: "🍮" },
+      { name: "Vanilleeis", emoji: "🍦" },
+      { name: "Früchtequark", emoji: "🍓" },
+      { name: "Joghurt", emoji: "🍿" },
+      { name: "Apfelmus", emoji: "🍎" },
+      { name: "Milchreis", emoji: "🍚" },
+      { name: "Wackelpudding", emoji: "🍮" },
+      { name: "Erdbeeren mit Sahne", emoji: "🍓" },
+      { name: "Banane", emoji: "🍌" },
+      { name: "Kakao", emoji: "☕️" },
+      { name: "Schokomousse", emoji: "🍫" },
+      { name: "Pfirsichhälften", emoji: "🍑" },
+      { name: "Apfelscheiben", emoji: "🍎" },
+      { name: "Eis am Stiel", emoji: "🍦" },
+      { name: "Früchtebecher", emoji: "🍇" },
+      { name: "Bananenshake", emoji: "🍌" },
+      { name: "Kinderkeks", emoji: "🍪" },
+      { name: "Mini-Donut", emoji: "🍩" },
+      { name: "Kaiserschmarrn", emoji: "🥞" }
+    ]
+  };
+  
