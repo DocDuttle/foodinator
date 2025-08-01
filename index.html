@@ -9,58 +9,19 @@
   <link href="fancy-fonts.css" rel="stylesheet">
 </head>
 <body class="bg-gradient-to-br from-gray-100 to-white min-h-screen p-4 overflow-x-hidden flex justify-center">
-  <!-- Login Form -->
-  <div id="login-screen" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-90 z-50 hidden">
-    <div class="bg-white p-6 rounded-xl shadow-xl w-full max-w-xs flex flex-col items-center">
-      <h2 class="text-xl font-semibold mb-4 text-blue-700">Login</h2>
-      <input id="login-username" type="text" placeholder="Benutzername" class="w-full mb-4 p-2 border rounded" />
-      <button id="login-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Login</button>
-    </div>
-  </div>
-  <!-- Customization Screen -->
-  <div id="customize-screen" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-95 z-50 hidden overflow-y-auto">
-    <div class="bg-white p-0 rounded-xl shadow-xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-y-auto">
-      <div class="sticky top-0 z-10 bg-white p-6 pb-2 rounded-t-xl">
-        <h2 class="text-xl font-semibold mb-4 text-blue-700">Menü anpassen</h2>
-      </div>
-      <form id="customize-form" class="flex-1 flex flex-col px-6 pb-2 overflow-y-auto">
-        <div class="mb-4">
-          <h3 class="font-bold mb-2">Hauptgang</h3>
-          <div id="customize-hauptgang" class="grid grid-cols-2 gap-2 min-h-[6rem]"></div>
-        </div>
-        <div class="mb-4">
-          <h3 class="font-bold mb-2">Beilage</h3>
-          <div id="customize-beilage" class="grid grid-cols-2 gap-2 min-h-[6rem]"></div>
-        </div>
-        <div class="mb-4">
-          <h3 class="font-bold mb-2">Gemüse</h3>
-          <div id="customize-gemuese" class="menu-grid mt-4 min-h-[6rem]"></div>
-        </div>
-        <div class="mb-4">
-          <h3 class="font-bold mb-2">Dessert</h3>
-          <div id="customize-dessert" class="menu-grid mt-4 min-h-[6rem]"></div>
-        </div>
-        <div class="button-row mt-6 sticky bottom-0 bg-white py-2">
-          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Speichern</button>
-          <button type="button" id="customize-cancel" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded">Zurück</button>
-        </div>
-        <button type="button" id="customize-scrolltop" class="w-full mt-2 mb-2 text-blue-500 underline text-sm">Nach oben</button>
-      </form>
-    </div>
-  </div>
+
   <div class="w-full max-w-xl bg-white shadow-xl rounded-xl p-4 sm:p-6 overflow-x-hidden min-h-[38rem]">
-    <button id="logout-btn" class="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm">Logout</button>
+
     <!-- Professional Header Card -->
     <div class="menu-header-card">
       <div class="menu-header-badge">Foodinator</div>
       <div class="menu-header-content">
-        <span class="menu-header-emoji">🍽️</span>
-        <h1 class="menu-header-title">Was gibt's zum Essen?</h1>
-        <p class="menu-header-subtitle">Weil „Ich weiß nicht…“ keine Mahlzeit ist.</p>
+        <p class="menu-header-subtext">Menüplanung für kleine Chefs</p>
+        <div class="italic text-gray-600 text-sm mt-1">#KaisProblem</div>
       </div>
     </div>
     <div class="flex flex-row gap-2 mb-4">
-      <button id="customize-btn" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded font-semibold hidden">Menü anpassen</button>
+
       <button id="surprise-btn-main" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold px-4 py-2 rounded flex items-center justify-center"><span class="mr-2">🎲</span> Überrasch mich!</button>
     </div>
 
@@ -68,7 +29,7 @@
     <div id="status-tracker" class="flex justify-between items-center mb-6">
       <div class="flex-1 flex flex-col items-center">
         <div id="status-hauptgang" class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold bg-blue-500">1</div>
-        <span class="text-xs mt-1">Hauptgang</span>
+        <span class="text-xs mt-1">Hauptzutat</span>
       </div>
       <div class="flex-1 h-1 bg-blue-200 mx-1"></div>
       <div class="flex-1 flex flex-col items-center">
@@ -80,15 +41,10 @@
         <div id="status-gemuese" class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold bg-blue-200">3</div>
         <span class="text-xs mt-1">Gemüse</span>
       </div>
-      <div class="flex-1 h-1 bg-blue-200 mx-1"></div>
-      <div class="flex-1 flex flex-col items-center">
-        <div id="status-dessert" class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold bg-blue-200">4</div>
-        <span class="text-xs mt-1">Dessert</span>
-      </div>
     </div>
 
     <div id="step-hauptgang" class="step">
-      <h2 class="text-xl font-medium text-gray-700">1. Hauptgang wählen</h2>
+      <h2 class="text-xl font-medium text-gray-700">1. Hauptzutat wählen</h2>
       <div id="hauptgang-grid" class="menu-grid mt-4 min-h-[20rem]"></div>
     </div>
 
@@ -108,11 +64,7 @@
       <div id="gemuese-grid" class="menu-grid mt-4 min-h-[20rem]"></div>
     </div>
 
-    <div id="step-dessert" class="step hidden">
-      <h2 class="text-xl font-medium text-gray-700">4. Dessert wählen</h2>
-      <button id="back-dessert" class="mb-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded" onclick="goBack('gemuese')">← Zurück</button>
-      <div id="dessert-grid" class="menu-grid mt-4 min-h-[20rem]"></div>
-    </div>
+
 
     <div id="step-summary" class="step hidden">
       <h2 class="text-xl font-medium text-gray-700">Dein Menü</h2>
@@ -158,11 +110,12 @@
       let beilageOptions = filterBeilage(hauptgang);
       let beilage = beilageOptions.length ? beilageOptions[Math.floor(Math.random() * beilageOptions.length)] : null;
       let gemuese = lebensmittel.gemuese[Math.floor(Math.random() * lebensmittel.gemuese.length)];
-      let dessert = lebensmittel.dessert[Math.floor(Math.random() * lebensmittel.dessert.length)];
-      return { hauptgang, beilage, gemuese, dessert };
+      return { hauptgang, beilage, gemuese };
     }
 
     function createCards(items, gridId, nextStep, key, filterFn) {
+  // Sort items alphabetically by name
+  items = [...items].sort((a, b) => a.name.localeCompare(b.name, 'de'));
       // --- Bulletproof single-row fix: apply .single-row if only one row
       setTimeout(() => {
         const grid = document.getElementById(gridId);
@@ -255,9 +208,7 @@
         }
         createCards(beilageOptions, 'beilage-grid', 'gemuese', 'beilage');
       } else if (step === 'gemuese') {
-        createCards(lebensmittel.gemuese, 'gemuese-grid', 'dessert', 'gemuese');
-      } else if (step === 'dessert') {
-        createCards(lebensmittel.dessert, 'dessert-grid', 'summary', 'dessert');
+        createCards(lebensmittel.gemuese, 'gemuese-grid', 'summary', 'gemuese');
       } else if (step === 'summary') {
         showSummary();
       }
@@ -272,14 +223,13 @@
         auswahl.gemuese = null;
         showStep('beilage');
       } else if (prevStep === 'gemuese') {
-        auswahl.dessert = null;
         showStep('gemuese');
       }
     }
 
     // Update the status tracker UI
     function updateStatusTracker(currentStep) {
-      const steps = ['hauptgang', 'beilage', 'gemuese', 'dessert'];
+      const steps = ['hauptgang', 'beilage', 'gemuese'];
       steps.forEach((step, i) => {
         const el = document.getElementById('status-' + step);
         if (!el) return;
@@ -303,7 +253,7 @@
             <div class="flex items-center gap-4">
               <span class="text-3xl md:text-4xl">${s.hauptgang ? s.hauptgang.emoji : '🍽️'}</span>
               <div>
-                <div class="text-blue-700 font-semibold text-lg leading-tight">Hauptgang</div>
+                <div class="text-blue-700 font-semibold text-lg leading-tight">Hauptzutat</div>
                 <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.hauptgang ? s.hauptgang.name : ''}</div>
               </div>
             </div>
@@ -368,40 +318,33 @@ function updateStatusTracker(currentStep) {
     const s = auswahl;
     const html = `
       <div class="relative bg-white rounded-2xl shadow-2xl border-2 border-blue-200 max-w-md mx-auto px-6 py-8 mt-2 mb-2">
-        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 to-blue-300 text-white px-6 py-1 rounded-full shadow text-lg font-bold tracking-wide">Dein Menü</div>
-        <div class="flex flex-col gap-4 mt-6">
-          <div class="flex items-center gap-4">
-            <span class="text-3xl md:text-4xl">${s.hauptgang ? s.hauptgang.emoji : '🍽️'}</span>
+        <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 to-blue-300 text-white px-4 py-1 rounded-full shadow text-base font-bold tracking-wide">Dein Menü</div>
+        <div class="flex flex-col gap-3 mt-6">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">${s.hauptgang ? s.hauptgang.emoji : '🍽️'}</span>
             <div>
-              <div class="text-blue-700 font-semibold text-lg leading-tight">Hauptgang</div>
-              <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.hauptgang ? s.hauptgang.name : ''}</div>
+              <div class="text-blue-700 font-semibold text-base leading-tight">Hauptzutat</div>
+              <div class="text-gray-800 text-lg font-bold">${s.hauptgang ? s.hauptgang.name : ''}</div>
             </div>
           </div>
-          <div class="flex items-center gap-4">
-            <span class="text-3xl md:text-4xl">${s.beilage ? s.beilage.emoji : '🥔'}</span>
+          <div class="flex items-center gap-3">
+            <span class="text-2xl w-8 flex justify-center">${s.beilage ? s.beilage.emoji : ''}</span>
             <div>
-              <div class="text-blue-700 font-semibold text-lg leading-tight">Beilage</div>
-              <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.beilage ? s.beilage.name : ''}</div>
+              <div class="text-blue-700 font-semibold text-base leading-tight">Beilage</div>
+              <div class="text-gray-800 text-lg ${s.beilage ? 'font-bold' : 'italic font-normal'}">${s.beilage ? s.beilage.name : 'nicht nötig'}</div>
             </div>
           </div>
-          <div class="flex items-center gap-4">
-            <span class="text-3xl md:text-4xl">${s.gemuese ? s.gemuese.emoji : '🥦'}</span>
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">${s.gemuese ? s.gemuese.emoji : '🥕'}</span>
             <div>
-              <div class="text-blue-700 font-semibold text-lg leading-tight">Gemüse</div>
-              <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.gemuese ? s.gemuese.name : ''}</div>
-            </div>
-          </div>
-          <div class="flex items-center gap-4">
-            <span class="text-3xl md:text-4xl">${s.dessert ? s.dessert.emoji : '🍨'}</span>
-            <div>
-              <div class="text-blue-700 font-semibold text-lg leading-tight">Dessert</div>
-              <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.dessert ? s.dessert.name : ''}</div>
+              <div class="text-blue-700 font-semibold text-base leading-tight">Gemüse</div>
+              <div class="text-gray-800 text-lg font-bold">${s.gemuese ? s.gemuese.name : ''}</div>
             </div>
           </div>
         </div>
-        <div class="mt-8 flex flex-col items-center">
+        <div class="mt-6 flex flex-col items-center">
           <button onclick="restart()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-semibold shadow">Neu starten</button>
-          <div class="mt-4 text-lg italic text-blue-500 font-pacifico">Bon Appétit!</div>
+          <div class="mt-3 text-base italic text-blue-500 font-pacifico">Bon Appétit!</div>
         </div>
       </div>
     `;
@@ -412,141 +355,30 @@ function updateStatusTracker(currentStep) {
     auswahl.hauptgang = null;
     auswahl.beilage = null;
     auswahl.gemuese = null;
-    auswahl.dessert = null;
     showStep("hauptgang");
     updateStatusTracker('hauptgang');
   }
 
-  // --- Auth & Customization State ---
-  const LS_USER_KEY = 'essenapp_user';
-  const LS_ACTIVE_KEY = user => `essenapp_active_${user}`;
-
-  function getUser() {
-    return localStorage.getItem(LS_USER_KEY);
-  }
-  function setUser(u) {
-    localStorage.setItem(LS_USER_KEY, u);
-  }
-  function removeUser() {
-    localStorage.removeItem(LS_USER_KEY);
-  }
-  function getActiveMap() {
-    const user = getUser();
-    if (!user) return {};
-    try {
-      return JSON.parse(localStorage.getItem(LS_ACTIVE_KEY(user))) || {};
-    } catch { return {}; }
-  }
-  function setActiveMap(map) {
-    const user = getUser();
-    if (!user) return;
-    localStorage.setItem(LS_ACTIVE_KEY(user), JSON.stringify(map));
-  }
-  function isActive(type, idx) {
-    const map = getActiveMap();
-    if (!map[type]) return true;
-    if (typeof map[type][idx] === 'boolean') return map[type][idx];
-    return true;
+  // Random menu function for surprise button
+  function randomMenu() {
+    const menu = getRandomMenu();
+    auswahl.hauptgang = menu.hauptgang;
+    auswahl.beilage = menu.beilage;
+    auswahl.gemuese = menu.gemuese;
+    showStep('summary');
+    showSummary();
   }
 
-  // --- DOM helpers and utilities ---
-  const toggleElement = (id, show) => document.getElementById(id).classList.toggle('hidden', !show);
-  const showLogin = (show) => toggleElement('login-screen', show);
-  const showCustomize = (show) => toggleElement('customize-screen', show);
-  const showApp = (show) => document.querySelector('.max-w-xl').classList.toggle('hidden', !show);
-  const showCustomizeBtn = (show) => toggleElement('customize-btn', show);
-  const showLogoutBtn = (show) => toggleElement('logout-btn', show);
-  
-  // Event delegation utility
-  const handleClick = (e) => {
-    const handlers = {
-      'login-btn': () => {
-        const u = document.getElementById('login-username').value.trim();
-        if (u) { setUser(u); checkLogin(); location.reload(); }
-      },
-      'logout-btn': () => { removeUser(); location.reload(); },
-      'customize-btn': () => {
-        populateCustomizeForm();
-        showCustomize(true);
-        setTimeout(() => {
-          const customizeDiv = document.querySelector('#customize-screen > div.overflow-y-auto');
-          if (customizeDiv) customizeDiv.scrollTo({top: 0, behavior: 'smooth'});
-        }, 50);
-      },
-      'customize-cancel': () => showCustomize(false)
-    };
-    
-    if (handlers[e.target.id]) {
-      handlers[e.target.id]();
-    }
-  };
-
-  // --- Login/logout logic ---
-  function checkLogin() {
-    const user = getUser();
-    if (!user) {
-      showLogin(true); showApp(false); showCustomizeBtn(false); showLogoutBtn(false);
-    } else {
-      showLogin(false); showApp(true); showCustomizeBtn(true); showLogoutBtn(true);
-    }
-  }
-  // Use event delegation for cleaner code
-  document.addEventListener('click', handleClick);
-  document.getElementById('customize-form').onsubmit = function(e) {
-    e.preventDefault();
-    const map = { hauptgang: [], beilage: [], gemuese: [], dessert: [] };
-    ['hauptgang','beilage','gemuese','dessert'].forEach(type => {
-      const boxes = document.querySelectorAll(`#customize-${type} input[type=checkbox]`);
-      boxes.forEach((cb,i) => { map[type][i] = cb.checked; });
-    });
-    setActiveMap(map);
-    showCustomize(false);
-    location.reload();
-  };
-  function populateCustomizeForm() {
-    const map = getActiveMap();
-    [
-      ['hauptgang', lebensmittel.hauptgang],
-      ['beilage', lebensmittel.beilage],
-      ['gemuese', lebensmittel.gemuese],
-      ['dessert', lebensmittel.dessert]
-    ].forEach(([type, arr]) => {
-      const cont = document.getElementById('customize-' + type);
-      cont.innerHTML = '';
-      arr.forEach((item, idx) => {
-        const id = `cb-${type}-${idx}`;
-        const checked = (map[type] === undefined || map[type][idx] === undefined) ? true : !!map[type][idx];
-        cont.innerHTML += `<label class='flex items-start gap-2 bg-gray-50 rounded px-2 py-1 min-w-0 min-h-[2.25rem] w-full'><input type='checkbox' id='${id}' ${checked ? 'checked' : ''} class='mt-1'/> <span class='text-lg flex-shrink-0'>${item.emoji}</span> <span class='block w-full break-words whitespace-normal text-base'>${item.name}</span></label>`;
-      });
-    });
-  }
-
-  // --- Patch menu filtering (cards) ---
+  // Initialize app when DOM is loaded
   document.addEventListener('DOMContentLoaded', function() {
-    checkLogin();
-    const origCreateCards = createCards;
-    createCards = function(items, gridId, nextStep, key, filterFn) {
-      let arrType = null;
-      if (gridId.includes('hauptgang')) arrType = 'hauptgang';
-      else if (gridId.includes('beilage')) arrType = 'beilage';
-      else if (gridId.includes('gemuese')) arrType = 'gemuese';
-      else if (gridId.includes('dessert')) arrType = 'dessert';
-      let filtered = items;
-      if (arrType) {
-        filtered = items.filter((item, idx) => isActive(arrType, idx));
-      }
-      if (filterFn) filtered = filtered.filter(filterFn);
-      return origCreateCards(filtered, gridId, nextStep, key, filterFn);
-    };
-    createCards(lebensmittel.hauptgang, "hauptgang-grid", "beilage", "hauptgang");
-    // Nach oben button in customize menu
-    const customizeScrollTopBtn = document.getElementById('customize-scrolltop');
-    if (customizeScrollTopBtn) {
-      customizeScrollTopBtn.onclick = function() {
-        const customizeDiv = document.querySelector('#customize-screen > div.overflow-y-auto');
-        if (customizeDiv) customizeDiv.scrollTo({top: 0, behavior: 'smooth'});
-      };
+    // Set up surprise button
+    const surpriseBtn = document.getElementById('surprise-btn-main');
+    if (surpriseBtn) {
+      surpriseBtn.onclick = randomMenu;
     }
+    
+    // Initialize main menu
+    createCards(lebensmittel.hauptgang, "hauptgang-grid", "beilage", "hauptgang");
   });
 </script>
 </body>
