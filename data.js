@@ -1,8 +1,8 @@
 const lebensmittel = {
     hauptgang: [
-      { name: "Bolognese", emoji: "🍝", pairs_with_tags: ["pasta"] },
-      { name: "Tomatensauce", emoji: "🍅", pairs_with_tags: ["pasta"] },
-      { name: "Käsesauce", emoji: "🧀", pairs_with_tags: ["pasta"] },
+      { name: "Bolognese", emoji: "🍝", pairs_with_tags: ["pasta","reis","kartoffel"] },
+      { name: "Tomatensauce", emoji: "🍅", pairs_with_tags: ["pasta","reis","kartoffel"] },
+      { name: "Käsesauce", emoji: "🧀", pairs_with_tags: ["pasta","reis","kartoffel"] },
       { name: "Lasagne", emoji: "🍝", pairs_with_tags: [] },
       { name: "Schinken-Käse-Auflauf", emoji: "🥘", pairs_with_tags: [] },
       { name: "Schnitzel", emoji: "🍖", pairs_with_tags: ["kartoffel", "pasta","reis"] },
