@@ -34,22 +34,22 @@
         </div>
         <div class="mb-4">
           <h3 class="font-bold mb-2">Gemüse</h3>
-          <div id="customize-gemuese" class="grid grid-cols-2 gap-2 min-h-[6rem]"></div>
+          <div id="customize-gemuese" class="menu-grid mt-4 min-h-[6rem]"></div>
         </div>
         <div class="mb-4">
           <h3 class="font-bold mb-2">Dessert</h3>
-          <div id="customize-dessert" class="grid grid-cols-2 gap-2 min-h-[6rem]"></div>
+          <div id="customize-dessert" class="menu-grid mt-4 min-h-[6rem]"></div>
         </div>
-        <div class="flex gap-2 mt-6 sticky bottom-0 bg-white py-2">
-          <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Speichern</button>
-          <button type="button" id="customize-cancel" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded">Zurück</button>
+        <div class="button-row mt-6 sticky bottom-0 bg-white py-2">
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Speichern</button>
+          <button type="button" id="customize-cancel" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded">Zurück</button>
         </div>
         <button type="button" id="customize-scrolltop" class="w-full mt-2 mb-2 text-blue-500 underline text-sm">Nach oben</button>
       </form>
     </div>
   </div>
   <div class="w-full max-w-xl bg-white shadow-xl rounded-xl p-4 sm:p-6 overflow-x-hidden min-h-[38rem]">
-    <button id="logout-btn" class="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm hidden">Logout</button>
+    <button id="logout-btn" class="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded text-sm">Logout</button>
     <!-- Professional Header Card -->
     <div class="menu-header-card">
       <div class="menu-header-badge">Foodinator</div>
@@ -59,7 +59,10 @@
         <p class="menu-header-subtitle">Weil „Ich weiß nicht…“ keine Mahlzeit ist.</p>
       </div>
     </div>
-    <button id="customize-btn" class="w-full mb-4 bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded font-semibold hidden">Menü anpassen</button>
+    <div class="flex flex-row gap-2 mb-4">
+      <button id="customize-btn" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-2 rounded font-semibold hidden">Menü anpassen</button>
+      <button id="surprise-btn-main" class="flex-1 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold px-4 py-2 rounded flex items-center justify-center"><span class="mr-2">🎲</span> Überrasch mich!</button>
+    </div>
 
     <!-- Enhanced Status Tracker -->
     <div id="status-tracker" class="flex justify-between items-center mb-6">
@@ -86,25 +89,29 @@
 
     <div id="step-hauptgang" class="step">
       <h2 class="text-xl font-medium text-gray-700">1. Hauptgang wählen</h2>
-      <div id="hauptgang-grid" class="menu-grid grid grid-cols-3 gap-4 gap-y-6 mt-4 min-h-[20rem]"></div>
+      <div id="hauptgang-grid" class="menu-grid mt-4 min-h-[20rem]"></div>
     </div>
 
     <div id="step-beilage" class="step hidden">
       <h2 class="text-xl font-medium text-gray-700">2. Beilage wählen</h2>
-      <button id="back-beilage" class="mb-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded" onclick="goBack('hauptgang')">← Zurück</button>
-      <div id="beilage-grid" class="menu-grid grid grid-cols-3 gap-4 gap-y-6 mt-4 min-h-[20rem]"></div>
+      <div class="mb-2">
+        <button id="back-beilage" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-2 rounded" onclick="goBack('hauptgang')">← Zurück</button>
+      </div>
+      <div id="beilage-grid" class="menu-grid mt-4 min-h-[20rem]"></div>
     </div>
 
     <div id="step-gemuese" class="step hidden">
       <h2 class="text-xl font-medium text-gray-700">3. Gemüse wählen</h2>
-      <button id="back-gemuese" class="mb-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded" onclick="goBack('beilage')">← Zurück</button>
-      <div id="gemuese-grid" class="menu-grid grid grid-cols-3 gap-4 gap-y-6 mt-4 min-h-[20rem]"></div>
+      <div class="mb-2">
+        <button id="back-gemuese" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-2 rounded" onclick="goBack('beilage')">← Zurück</button>
+      </div>
+      <div id="gemuese-grid" class="menu-grid mt-4 min-h-[20rem]"></div>
     </div>
 
     <div id="step-dessert" class="step hidden">
       <h2 class="text-xl font-medium text-gray-700">4. Dessert wählen</h2>
       <button id="back-dessert" class="mb-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-3 py-1 rounded" onclick="goBack('gemuese')">← Zurück</button>
-      <div id="dessert-grid" class="menu-grid grid grid-cols-3 gap-4 gap-y-6 mt-4 min-h-[20rem]"></div>
+      <div id="dessert-grid" class="menu-grid mt-4 min-h-[20rem]"></div>
     </div>
 
     <div id="step-summary" class="step hidden">
@@ -117,6 +124,23 @@
   <script>
     const auswahl = {};
     let favorites = [];
+
+    // Random menu selection for 'Überrasch mich!'
+    function randomMenu() {
+      const menu = getRandomMenu();
+      auswahl.hauptgang = menu.hauptgang;
+      auswahl.beilage = menu.beilage;
+      auswahl.gemuese = menu.gemuese;
+      auswahl.dessert = menu.dessert;
+      showStep('summary');
+      showSummary();
+    }
+
+    // Attach handler to main surprise button
+    document.addEventListener('DOMContentLoaded', function() {
+      const btn = document.getElementById('surprise-btn-main');
+      if (btn) btn.onclick = randomMenu;
+    });
 
     function getKidStars(n) {
       return '⭐'.repeat(n);
@@ -170,23 +194,7 @@
         });
         searchInput.hasListener = true;
       }
-      // Add "Surprise Me!" button
-      let surpriseBtn = container.querySelector('.surprise-btn');
-      if (!surpriseBtn) {
-        surpriseBtn = document.createElement('button');
-        surpriseBtn.textContent = '🎲 Überrasch mich!';
-        surpriseBtn.className = 'surprise-btn mb-4 ml-2 bg-yellow-300 hover:bg-yellow-400 text-yellow-900 font-bold px-3 py-1 rounded shadow';
-        surpriseBtn.onclick = () => {
-          const randomMenu = getRandomMenu();
-          auswahl.hauptgang = randomMenu.hauptgang;
-          auswahl.beilage = randomMenu.beilage;
-          auswahl.gemuese = randomMenu.gemuese;
-          auswahl.dessert = randomMenu.dessert;
-          showStep('summary');
-          showSummary();
-        };
-        container.insertBefore(surpriseBtn, searchInput.nextSibling);
-      }
+
       const grid = document.getElementById(gridId);
       grid.innerHTML = '';
       let filtered = items;
@@ -226,50 +234,34 @@
       });
     }
 
+    // Utility: scroll to top of page
+    const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Show a step, handle skipping, and always scroll to top
     function showStep(step) {
-  // Add fade-out animation to current step
-  const currentStep = document.querySelector('.step:not(.hidden)');
-  if (currentStep) {
-    currentStep.classList.add('fade-out');
-    setTimeout(() => {
-      document.querySelectorAll(".step").forEach(s => {
-        s.classList.add("hidden");
-        s.classList.remove('fade-out');
-      });
-      
-      const newStep = document.getElementById(`step-${step}`);
-      newStep.classList.remove("hidden");
-      newStep.classList.add('fade-in');
-      
-      setTimeout(() => newStep.classList.remove('fade-in'), 300);
-    }, 150);
-  } else {
-    document.querySelectorAll(".step").forEach(s => s.classList.add("hidden"));
-    const newStep = document.getElementById(`step-${step}`);
-    newStep.classList.remove("hidden");
-    newStep.classList.add('fade-in');
-    setTimeout(() => newStep.classList.remove('fade-in'), 300);
-  }
-  
-  updateStatusTracker(step);
-  // Scroll main container to top after step change
-  const mainContainer = document.querySelector('.max-w-xl');
-  if (mainContainer) mainContainer.scrollIntoView({behavior: 'smooth', block: 'start'});
-  window.scrollTo({top: 0, behavior: 'smooth'});
-  if (step === "beilage" && auswahl.hauptgang) {
+      scrollToTop();
+      // Hide all steps
+      document.querySelectorAll('.step').forEach(s => s.classList.add('hidden'));
+      // Show the current step
+      const stepElement = document.getElementById(`step-${step}`);
+      if (stepElement) stepElement.classList.remove('hidden');
+      // Handle special step logic
+      if (step === 'beilage' && auswahl.hauptgang) {
         const beilageOptions = filterBeilage(auswahl.hauptgang);
-        // If there are no matching Beilage, skip to Gemüse
         if (!auswahl.hauptgang.pairs_with_tags || auswahl.hauptgang.pairs_with_tags.length === 0 || beilageOptions.length === 0) {
           auswahl.beilage = null;
-          showStep("gemuese");
+          showStep('gemuese');
           return;
         }
-        createCards(beilageOptions, "beilage-grid", "gemuese", "beilage");
-      } else if (step === "gemuese") {
-        createCards(lebensmittel.gemuese, "gemuese-grid", "dessert", "gemuese");
-      } else if (step === "dessert") {
-        createCards(lebensmittel.dessert, "dessert-grid", "summary", "dessert");
+        createCards(beilageOptions, 'beilage-grid', 'gemuese', 'beilage');
+      } else if (step === 'gemuese') {
+        createCards(lebensmittel.gemuese, 'gemuese-grid', 'dessert', 'gemuese');
+      } else if (step === 'dessert') {
+        createCards(lebensmittel.dessert, 'dessert-grid', 'summary', 'dessert');
+      } else if (step === 'summary') {
+        showSummary();
       }
+      updateStatusTracker(step);
     }
 
     function goBack(prevStep) {
@@ -285,6 +277,7 @@
       }
     }
 
+    // Update the status tracker UI
     function updateStatusTracker(currentStep) {
       const steps = ['hauptgang', 'beilage', 'gemuese', 'dessert'];
       steps.forEach((step, i) => {
@@ -300,58 +293,60 @@
       });
     }
 
+    // Show the summary card
     function showSummary() {
-  const s = auswahl;
-  const html = `
-    <div class="relative bg-white rounded-2xl shadow-2xl border-2 border-blue-200 max-w-md mx-auto px-6 py-8 mt-2 mb-2">
-      <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 to-blue-300 text-white px-6 py-1 rounded-full shadow text-lg font-bold tracking-wide">Dein Menü</div>
-      <div class="flex flex-col gap-4 mt-6">
-        <div class="flex items-center gap-4">
-          <span class="text-3xl md:text-4xl">${s.hauptgang ? s.hauptgang.emoji : '🍽️'}</span>
-          <div>
-            <div class="text-blue-700 font-semibold text-lg leading-tight">Hauptgang</div>
-            <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.hauptgang ? s.hauptgang.name : ''}</div>
+      const s = auswahl;
+      const html = `
+        <div class="relative bg-white rounded-2xl shadow-2xl border-2 border-blue-200 max-w-md mx-auto px-6 py-8 mt-2 mb-2">
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-blue-500 to-blue-300 text-white px-6 py-1 rounded-full shadow text-lg font-bold tracking-wide">Dein Menü</div>
+          <div class="flex flex-col gap-4 mt-6">
+            <div class="flex items-center gap-4">
+              <span class="text-3xl md:text-4xl">${s.hauptgang ? s.hauptgang.emoji : '🍽️'}</span>
+              <div>
+                <div class="text-blue-700 font-semibold text-lg leading-tight">Hauptgang</div>
+                <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.hauptgang ? s.hauptgang.name : ''}</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="text-3xl md:text-4xl">${s.beilage ? s.beilage.emoji : '🥔'}</span>
+              <div>
+                <div class="text-blue-700 font-semibold text-lg leading-tight">Beilage</div>
+                <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.beilage ? s.beilage.name : ''}</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="text-3xl md:text-4xl">${s.gemuese ? s.gemuese.emoji : '🥦'}</span>
+              <div>
+                <div class="text-blue-700 font-semibold text-lg leading-tight">Gemüse</div>
+                <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.gemuese ? s.gemuese.name : ''}</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="text-3xl md:text-4xl">${s.dessert ? s.dessert.emoji : '🍨'}</span>
+              <div>
+                <div class="text-blue-700 font-semibold text-lg leading-tight">Dessert</div>
+                <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.dessert ? s.dessert.name : ''}</div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-8 flex flex-col items-center">
+            <button onclick="restart()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-semibold shadow">Neu starten</button>
+            <div class="mt-4 text-lg italic text-blue-500 font-pacifico">Bon Appétit!</div>
           </div>
         </div>
-        <div class="flex items-center gap-4">
-          <span class="text-3xl md:text-4xl">${s.beilage ? s.beilage.emoji : '🥔'}</span>
-          <div>
-            <div class="text-blue-700 font-semibold text-lg leading-tight">Beilage</div>
-            <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.beilage ? s.beilage.name : ''}</div>
-          </div>
-        </div>
-        <div class="flex items-center gap-4">
-          <span class="text-3xl md:text-4xl">${s.gemuese ? s.gemuese.emoji : '🥦'}</span>
-          <div>
-            <div class="text-blue-700 font-semibold text-lg leading-tight">Gemüse</div>
-            <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.gemuese ? s.gemuese.name : ''}</div>
-          </div>
-        </div>
-        <div class="flex items-center gap-4">
-          <span class="text-3xl md:text-4xl">${s.dessert ? s.dessert.emoji : '🍨'}</span>
-          <div>
-            <div class="text-blue-700 font-semibold text-lg leading-tight">Dessert</div>
-            <div class="text-gray-800 text-xl md:text-2xl font-bold">${s.dessert ? s.dessert.name : ''}</div>
-          </div>
-        </div>
-      </div>
-      <div class="mt-8 flex flex-col items-center">
-        <button onclick="restart()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-semibold shadow">Neu starten</button>
-        <div class="mt-4 text-lg italic text-blue-500 font-pacifico">Bon Appétit!</div>
-      </div>
-    </div>
-  `;
-  document.getElementById("summary").innerHTML = html;
-}
+      `;
+      document.getElementById("summary").innerHTML = html;
+    }
 
-function restart() {
-  auswahl.hauptgang = null;
-  auswahl.beilage = null;
-  auswahl.gemuese = null;
-  auswahl.dessert = null;
-  showStep("hauptgang");
-  updateStatusTracker('hauptgang');
-}
+    // Restart menu selection
+    function restart() {
+      auswahl.hauptgang = null;
+      auswahl.beilage = null;
+      auswahl.gemuese = null;
+      auswahl.dessert = null;
+      showStep('hauptgang');
+      updateStatusTracker('hauptgang');
+    }
 
 function updateStatusTracker(currentStep) {
   const steps = ['hauptgang', 'beilage', 'gemuese', 'dessert'];
